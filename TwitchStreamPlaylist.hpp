@@ -6,14 +6,14 @@
 class TwitchStreamPlaylist
 {
 public:
-    enum class StreamQuality
-    {
-        Mobile,
-	Low,
-	Medium,
-	High,
-	Source
-    }
+	enum class StreamQuality
+	{
+		Mobile,
+		Low,
+		Medium,
+		High,
+		Source
+	};
 
     int getBitrate();
     StreamQuality getQuality();
@@ -25,4 +25,4 @@ private:
 
     TwitchStreamPlaylist();
     ~TwitchStreamPlaylist();
-}
+};

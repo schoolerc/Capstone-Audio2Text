@@ -41,29 +41,29 @@ std::string HttpClient::translateMethod(HttpRequest::HttpMethod method)
     switch(method)
     {
     default:
-    case HttpRequest::GET:
+	case HttpRequest::HttpMethod::GET:
         return "GET";
-    case HttpRequest::POST:
+	case HttpRequest::HttpMethod::POST:
         return "POST";
-    case HttpRequest::PUT:
+	case HttpRequest::HttpMethod::PUT:
         return "PUT";
-    case HttpRequest::DELETE:
+	case HttpRequest::HttpMethod::DELETE:
         return "DELETE";
     }
 }
 
 std::string HttpClient::serializeRequest(const HttpRequest& r)
 {
-    std::stringstring request;
+    std::stringstream request;
     
-    request << translateMethod(r.getMethod()) << " " << r.getUri() << " HTTP/1.1" << "\r\n"
+	request << translateMethod(r.getMethod()) << " " << r.getUri() << " HTTP/1.1" << "\r\n";
     
-    for(auto header : r.getHeaders)
+    for(auto header : r.getHeaders())
     {
         request << header.first << ": " << header.second << "\r\n";
     }
 
-    request << "\r\n"
+	request << "\r\n";
     
     if(r.getData().size() != 0)
     {
@@ -73,20 +73,20 @@ std::string HttpClient::serializeRequest(const HttpRequest& r)
     return request.str();
 }
 
-bool HttpClient::executeRequest(const HttpRequest& request, std::function<void(const HttpResponse&)>)
+HttpResponse HttpClient::executeRequest(const HttpRequest& request)
 {
     if(!_socket.is_open())
     {
-        return false;
+        //throw exception
     }
-    std::string serializedRequest = serializeRequest(request):
+	std::string serializedRequest = serializeRequest(request);
     
     //write returns number of bytes transferred, confirm with request size
     auto result = boost::asio::write(_socket, boost::asio::buffer(serializedRequest.c_str(), serializedRequest.size()));
     if(result != serializedRequest.size())
     {
-        return false;
+        //throw exception
     }
 
-    
+	return HttpResponse();
 }

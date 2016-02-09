@@ -26,11 +26,11 @@ void HttpRequest::removeHeader(std::string key)
     auto itr = _headers.find(key);
     if(itr != _headers.end())
     {
-        _headers.erase(*itr);
+		_headers.erase(key);
     }
 }
 
-std::unordered_map<std::string, std::string> HttpRequest::getHeaders()
+std::unordered_map<std::string, std::string> HttpRequest::getHeaders()const
 {
     return _headers;
 }

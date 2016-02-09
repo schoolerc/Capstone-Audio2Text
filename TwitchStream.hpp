@@ -3,11 +3,11 @@ class TwitchStreamPlaylist;
 class TwitchStream
 {
 public:
-    TwitchStream(std::string streamName);
-    ~TwitchStream();
+	TwitchStream(std::string streamName);
+	~TwitchStream();
 
-    TwitchStreamPlaylist getPlaylist(std::string quality);
+	TwitchStreamPlaylist getPlaylist(std::string quality);
 
 private:
-    std::string _streamName;
-}
+	std::string _streamName;
+};

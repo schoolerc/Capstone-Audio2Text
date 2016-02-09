@@ -21,6 +21,6 @@ public:
     bool connect(std::string host);
     bool disconnect();
     bool isConnected();
-    void executeRequest(const HttpRequest&, std::function<void(const HttpResponse&)>);
+	HttpResponse executeRequest(const HttpRequest&);
 
-}
+};

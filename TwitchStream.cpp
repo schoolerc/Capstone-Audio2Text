@@ -9,4 +9,5 @@ TwitchStream::~TwitchStream()
 
 TwitchStreamPlaylist TwitchStream::getPlaylist(std::string quality)
 {
+	return TwitchStreamPlaylist();
 }

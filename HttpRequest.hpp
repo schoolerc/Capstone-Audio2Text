@@ -1,3 +1,4 @@
+#undef DELETE
 #include <string>
 #include <unordered_map>
 class HttpRequest
@@ -19,14 +20,14 @@ public:
     void removeHeader(std::string key);
     void setData(std::string data);
 
-    std::string getHeader(std::string key);
-    std::unordered_map<std::string, std::string> getHeaders();
-    std::string getUri();
-    std::string getMethod();
-    std::string getData();
+    std::string getHeader(std::string key)const;
+    std::unordered_map<std::string, std::string> getHeaders()const;
+	std::string getUri()const { return _uri; }
+	HttpMethod getMethod()const { return _method; }
+	std::string getData()const { return _data; }
 private:
     std::unordered_map<std::string, std::string> _headers;
     std::string _uri;
     std::string _data;
     HttpMethod _method;
-}
+};
