@@ -10,11 +10,12 @@
 int main(int argc, const char* argv[])
 {
 	HttpRequest request;
-	request.setUri("/");
+	request.setUri("/api/channels/ClintStevens/access_token");
 	request.setMethod(HttpRequest::HttpMethod::GET);
 	request.setData("");
 
-	request.addHeader("Host", "www.twitch.tv");
+	request.addHeader("Host", "api.twitch.tv");
+	request.addHeader("Accept-Encoding", "gzip");
 	request.addHeader("Accept", "text/html");
 	request.addHeader("Connection", "keep-alive");
 
@@ -22,13 +23,15 @@ int main(int argc, const char* argv[])
 
 	try
 	{
-		client.connect("www.twitch.tv");
+		client.connect("api.twitch.tv");
 		HttpResponse r = client.executeRequest(request);
-		std::cout << r.getResponseCode();
+		std::cout << r.getResponseCode() << std::endl;;
 		std::cout << r.getContent();
+		std::this_thread::sleep_for(std::chrono::minutes(5));
 	}
 	catch (boost::exception& ex)
 	{
 		boost::diagnostic_information(ex);
 	}
+	return 0;
 }
