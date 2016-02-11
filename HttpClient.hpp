@@ -14,12 +14,16 @@ private:
 
     std::string translateMethod(HttpRequest::HttpMethod);
     std::string serializeRequest(const HttpRequest&);
-    HttpResponse deserializeResponse(const std::string&);
+	void parseHeaders(HttpResponse&, std::istream&);
+
+
+	void sendRequest(const HttpRequest&);
+	HttpResponse receiveResponse();
 public:
     HttpClient();
     ~HttpClient();
-    bool connect(std::string host);
-    bool disconnect();
+    void connect(std::string host);
+    void disconnect();
     bool isConnected();
 	HttpResponse executeRequest(const HttpRequest&);
 

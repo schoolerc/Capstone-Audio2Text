@@ -34,3 +34,8 @@ std::unordered_map<std::string, std::string> HttpRequest::getHeaders()const
 {
     return _headers;
 }
+
+void HttpRequest::setData(std::string data)
+{
+	_data = data;
+}

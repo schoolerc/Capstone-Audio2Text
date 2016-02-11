@@ -1,3 +1,4 @@
+#pragma once
 #undef DELETE
 #include <string>
 #include <unordered_map>
@@ -30,4 +31,5 @@ private:
     std::string _uri;
     std::string _data;
     HttpMethod _method;
+
 };

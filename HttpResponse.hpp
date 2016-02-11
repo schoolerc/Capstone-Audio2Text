@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <unordered_map>
 
@@ -8,6 +9,9 @@ private:
     std::string _uri;
     std::string _host;
     std::string _body;
+	int _responseCode;
+
+	friend class HttpClient;
 
 public:
 	HttpResponse();
@@ -16,5 +20,6 @@ public:
     std::string getHeader(std::string key);
     std::string getHost();
     std::string getUri();
-    std::string getContent();
+	std::string getContent();
+	int getResponseCode() { return _responseCode; }
 };
