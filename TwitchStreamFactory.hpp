@@ -8,14 +8,15 @@ public:
     TwitchStreamFactory(){}
     ~TwitchStreamFactory(){}
 
-    void addPlaylist(TwitchStreamPlaylist);
     void setName(std::string);
+    void setM3U8(std::string);
 
     void clear();
 
     TwitchStream build();
 
 private:
+    std::string _m3u8;
     std::vector<TwitchStreamPlaylist> _playlists;
     std::string _name;
 };

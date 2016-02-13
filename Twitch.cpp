@@ -95,37 +95,9 @@ TwitchStream Twitch::getStreamSource(std::string channel_name, std::string acces
     }
 
 	TwitchStreamFactory twitchStreamFactory;
+
 	twitchStreamFactory.setName(channel_name);
+	twitchStreamFactory.setM3U8(response.body());
 
-    std::string body = response.body();
-    parseM3U8(body, twitchStreamFactory);
-
-    return twitchStreamFactory.build();
-}
-
-void Twitch::parseM3U8(std::string string, TwitchStreamFactory& tStreamFactory) {
-    std::stringstream stream(string);
-
-    std::string m3uLine;
-
-    //ditch first two lines, there's no really important information
-    std::getline(stream, m3uLine);
-    std::getline(stream, m3uLine);
-
-	TwitchStreamPlaylistFactory playlistFactory;
-    while(stream.good())
-    {
-        playlistFactory.clear();
-        std::string mediaInfo, streamInfo, streamUri;
-
-        if(!(std::getline(stream, mediaInfo) && std::getline(stream, streamInfo) && std::getline(stream, streamUri)))
-        {
-            break;
-        }
-        playlistFactory.setIndexFileUri(streamUri);
-        playlistFactory.setMediaInfoStr(mediaInfo);
-        playlistFactory.setStreamInfoStr(streamInfo);
-
-        tStreamFactory.addPlaylist(playlistFactory.build());
-    }
+	return twitchStreamFactory.build();
 }
