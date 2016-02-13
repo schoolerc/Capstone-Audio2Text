@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 
 /*
@@ -6,7 +7,7 @@
 class TwitchStreamPlaylist
 {
 public:
-	enum class StreamQuality
+	enum class Quality
 	{
 		Mobile,
 		Low,
@@ -15,14 +16,24 @@ public:
 		Source
 	};
 
-    int getBitrate();
-    StreamQuality getQuality();
-private:
-    friend class TwitchStream;
+	struct Resolution
+	{
+	    int _width;
+	    int _height;
+	};
 
-    int _bitrate;
-    StreamQuality _quality;
+    int getBandwith() { return _bandwidth; }
+    Resolution getResolution() { return _resolution; }
+    Quality getQuality() { return _quality; }
+
+	~TwitchStreamPlaylist();
+private:
+    int _bandwidth;
+    Resolution _resolution;
+	Quality _quality;
+    std::string _uri;
 
     TwitchStreamPlaylist();
-    ~TwitchStreamPlaylist();
+
+    friend class TwitchStreamPlaylistFactory;
 };

@@ -1,13 +1,12 @@
 #include "TwitchStream.hpp"
-#include "TwitchStreamPlaylist.hpp"
 
-TwitchStream::TwitchStream(std::string streamName):_streamName(streamName)
+TwitchStream::TwitchStream()
 {}
 
 TwitchStream::~TwitchStream()
 {}
 
-TwitchStreamPlaylist TwitchStream::getPlaylist(std::string quality)
+TwitchStreamPlaylist TwitchStream::getPlaylist(TwitchStreamPlaylist::Quality q)
 {
-	return TwitchStreamPlaylist();
+	return _playlists.front();
 }
