@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include <deque>
+#include <boost/network/protocol.hpp>
+#include "TwitchStreamChunk.hpp"
 
 /*
  * \brief Class that represents a specific quality of a twitch stream.
@@ -25,6 +28,9 @@ public:
     int getBandwith() { return _bandwidth; }
     Resolution getResolution() { return _resolution; }
     Quality getQuality() { return _quality; }
+	std::string getUri() {return _uri; }
+
+	void stream();
 
 	~TwitchStreamPlaylist();
 private:
@@ -32,8 +38,12 @@ private:
     Resolution _resolution;
 	Quality _quality;
     std::string _uri;
+    std::vector<TwitchStreamChunk> _prevChunks;
 
     TwitchStreamPlaylist();
+
+    std::vector<TwitchStreamChunk> getCurrentChunks();
+    void downloadChunks(std::vector<TwitchStreamChunk>& chunks);
 
     friend class TwitchStreamPlaylistFactory;
 };

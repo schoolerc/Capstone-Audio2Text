@@ -35,13 +35,13 @@ std::pair<std::string, std::string> Twitch::getAccessTokenAndSig(std::string cha
 	std::string accessUrl = (boost::format(ACCESS_TOKEN_URL_FORMAT_STR) % channel_name).str();
 	network::uri::uri accessUri(accessUrl);
 
-	http::client::request request(accessUri);
+	_HttpClientType::request request(accessUri);
 	request << network::header("Connection", "close");
 	request << network::header("Accept", "text/json");
 
 	
 	//perform a GET
-	auto response = _cachedClient.get(request);
+	auto response = getHttpClient().get(request);
 
 
 	//convert the body of the response and get the relevent values;
@@ -76,7 +76,7 @@ TwitchStream Twitch::getStreamSource(std::string channel_name, std::string acces
 	uri << network::uri::query("type", "any");
 	//*/
 
-	http::client::request request(uri.string());
+    _HttpClientType::request request(uri.string());
 	request << network::header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 	request << network::header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
 	request << network::header("Host", "usher.twitch.tv");
@@ -84,9 +84,7 @@ TwitchStream Twitch::getStreamSource(std::string channel_name, std::string acces
 	request << network::header("Accept-Language", "en-US,en;q=0.5");
 	request << network::header("Connection", "close");
 
-    std::cout << request.uri().string() << std::endl;
-
-	auto response = _cachedClient.get(request);
+	auto response = getHttpClient().get(request);
 
     auto contentType = response.headers().find("Content-Type");
     if(contentType == response.headers().end() || contentType->second.compare("application/vnd.apple.mpegurl") != 0)

@@ -15,7 +15,6 @@ public:
 
 	TwitchStream openStream(std::string channel_name);
 private:
-	boost::network::http::client _cachedClient;
 
 
 	std::pair<std::string, std::string> getAccessTokenAndSig(std::string channel_name);
