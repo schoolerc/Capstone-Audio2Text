@@ -8,7 +8,7 @@ int main(int argc, const char* argv[])
 	try
 	{
 		Twitch tv;
-		TwitchStream stream = tv.openStream("clintstevens");
+		TwitchStream stream = tv.openStream(argv[1]);
 
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
