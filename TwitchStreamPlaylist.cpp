@@ -47,7 +47,7 @@ void TwitchStreamPlaylist::stream()
         return itr != _prevChunks.end();
     });
 
-    chunksToDownload.front().download();
+    chunksToDownload.back().download();
     //downloadChunks(chunksToDownload);
 
     _prevChunks = currentChunks;

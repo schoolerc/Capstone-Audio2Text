@@ -57,13 +57,34 @@ void TwitchStreamChunk::download()
 
     _rawVideoData = std::make_shared<std::stringstream>(response.body());
 
-    const int internalBufSize = 1024*1024*8;
+    //Create ffmpeg structures
+    const int internalBufSize = 1024*32;
     unsigned char* internalBuffer = new unsigned char[internalBufSize];
     AVIOContext* IOContext = avio_alloc_context(internalBuffer, internalBufSize, 0, this, internalAVFormatRead, 0, internalAVFormatSeek);
     AVFormatContext* formatContext = avformat_alloc_context();
 
+    //Tell ffmpeg to use our IO stuffs
     formatContext->pb = IOContext;
     formatContext->flags = AVFMT_FLAG_CUSTOM_IO;
+
+    //Find out what input format to use.
+    unsigned char* tmpBuffer = new unsigned char[internalBufSize];
+    _rawVideoData->read((char*)tmpBuffer, internalBufSize);
+    int bytesRead = _rawVideoData->gcount();
+
+    //reset the stream for ffmpeg to use
+    _rawVideoData->seekg(0, std::ios_base::beg);
+
+    //Create the probeData structure for av_prove_input_format
+    AVProbeData probeData;
+    probeData.buf = tmpBuffer;
+    probeData.buf_size = bytesRead;
+    probeData.filename = getUri().c_str();
+
+    formatContext->iformat = av_probe_input_format(&probeData, 1);
+
+    //cleanup probe
+    delete[] tmpBuffer;
 
     if(avformat_open_input(&formatContext, this->_uri.c_str(), 0, 0) != 0)
     {
@@ -71,4 +92,11 @@ void TwitchStreamChunk::download()
     }
 
     //TODO: test if we actually have the video file open
+    av_dump_format(formatContext, 0, getUri().c_str(), 0);
+
+
+
+    avformat_close_input(&formatContext);
+    av_free(IOContext);
+    delete[] internalBuffer;
 }
