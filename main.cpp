@@ -3,11 +3,13 @@
 #include "Twitch.hpp"
 #include "Utilities.hpp"
 #include <thread>
+#include "FFMPEG.hpp"
+
 
 
 int main(int argc, const char* argv[])
 {
-    _HttpClientType HttpClient;
+	av_register_all();
 	try
 	{
 		Twitch tv;

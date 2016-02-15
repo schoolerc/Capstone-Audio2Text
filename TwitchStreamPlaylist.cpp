@@ -47,19 +47,16 @@ void TwitchStreamPlaylist::stream()
         return itr != _prevChunks.end();
     });
 
-    downloadChunks(chunksToDownload);
+    chunksToDownload.front().download();
+    //downloadChunks(chunksToDownload);
 
     _prevChunks = currentChunks;
 }
 
 void TwitchStreamPlaylist::downloadChunks(std::vector<TwitchStreamChunk> &chunks)
 {
-    for (auto c : chunks)
+    for(auto c : chunks)
     {
-        _HttpClientType::request request(c.getUri());
-        auto response = getHttpClient().get(request);
-
-        std::cout << response.body() << std::endl;
+        c.download();
     }
-    std::this_thread::sleep_for(std::chrono::seconds(1));
 }
