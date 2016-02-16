@@ -8,7 +8,7 @@ _HttpClientType &getHttpClient() {
   return client;
 }
 
-std::shared_ptr<ps_decoder_t> getDecoder() {
+/*std::shared_ptr<ps_decoder_t> getDecoder() {
   static std::shared_ptr<ps_decoder_t> ps(nullptr, ps_free);
   static std::shared_ptr<cmd_ln_t> config(nullptr, cmd_ln_free_r);
 
@@ -18,12 +18,12 @@ std::shared_ptr<ps_decoder_t> getDecoder() {
 													"-lm", SPHINX_MODELDIR "/en-us/en-us.lm.bin",
 													"-dict", SPHINX_MODELDIR "/en-us/cmudict-en-us.dict",
 													nullptr));
-	ps = std::make_shared<>(ps_init(config.get()));
+	ps = std::make_shared<ps_decoder_t>(ps_init(config.get()));
   }
 
   return ps;
 }
-
+*/
 std::string escape_json(const std::string &s) {
   std::ostringstream o;
   for (auto c = s.cbegin(); c != s.cend(); c++) {
