@@ -1,5 +1,6 @@
 #include "AudioChunk.h"
 #include <cstdlib>
+#include <string.h>
 
 AudioChunk::AudioChunk() { }
 

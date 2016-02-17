@@ -4,6 +4,7 @@
 #include "AudioChunkFactory.h"
 #include <exception>
 #include <stdexcept>
+#include <thread>
 
 
 void TwitchStreamChunk::download() {
@@ -19,5 +20,5 @@ void TwitchStreamChunk::download() {
   factory.setUri(getUri());
 
   AudioChunk c = factory.build();
-
+  std::this_thread::sleep_for(std::chrono::minutes(1));
 }

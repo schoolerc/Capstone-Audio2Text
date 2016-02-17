@@ -4,7 +4,7 @@
 class AudioChunk {
 private:
     unsigned char* _buffer = nullptr;
-    size_t _size;
+    unsigned int _size;
     int _duration;
 
     friend class AudioChunkFactory;
@@ -18,6 +18,6 @@ public:
     AudioChunk combine(const AudioChunk&);
 
     unsigned char* buffer() {return _buffer;}
-    size_t size() {return _size;}
+    unsigned int size() {return _size;}
     int duration() { return _duration;}
 };

@@ -2,6 +2,8 @@
 #include <sstream>
 #include "FFMPEG.hpp"
 #include <iostream>
+#include <exception>
+#include <stdexcept>
 
 void printAudioFrameInfo(const AVCodecContext* codecContext, const AVFrame* frame)
 {
@@ -153,6 +155,8 @@ AudioChunk AudioChunkFactory::build()
 
     AVPacket packet;
     av_init_packet(&packet);
+    packet.data = nullptr;
+    packet.size = 0;
 
     AVFrame *frame = av_frame_alloc();
     std::vector<AVFrame> audioFrames;
@@ -187,4 +191,5 @@ AudioChunk AudioChunkFactory::build()
     avformat_close_input(&formatContext);
     av_free(IOContext);
     delete[] internalBuffer;
+    return AudioChunk();
 }
