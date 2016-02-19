@@ -4,17 +4,17 @@
 #include "TwitchStreamPlaylist.hpp"
 class TwitchStream
 {
-public:
-    ~TwitchStream();
+ public:
+  ~TwitchStream();
 
-	TwitchStreamPlaylist getPlaylist(TwitchStreamPlaylist::Quality);
-    std::string streamName();
+  TwitchStreamPlaylist getPlaylist(TwitchStreamPlaylist::Quality);
+  std::string streamName();
 
-private:
-    TwitchStream();
+ private:
+  TwitchStream();
 
-	std::string _streamName;
-	std::vector<TwitchStreamPlaylist> _playlists;
+  std::string _streamName;
+  std::vector<TwitchStreamPlaylist> _playlists;
 
-    friend class TwitchStreamFactory;
+  friend class TwitchStreamFactory;
 };

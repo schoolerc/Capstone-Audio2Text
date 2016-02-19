@@ -9,41 +9,45 @@
  */
 class TwitchStreamPlaylist
 {
-public:
-	enum class Quality
-	{
-		Mobile,
-		Low,
-		Medium,
-		High,
-		Source
-	};
+ public:
+  enum class Quality
+  {
+    Mobile,
+    Low,
+    Medium,
+    High,
+    Source
+  };
 
-	struct Resolution
-	{
-	    int _width;
-	    int _height;
-	};
+  struct Resolution
+  {
+    int _width;
+    int _height;
+  };
 
-    int getBandwith() { return _bandwidth; }
-    Resolution getResolution() { return _resolution; }
-    Quality getQuality() { return _quality; }
-	std::string getUri() {return _uri; }
+  int getBandwith()
+  { return _bandwidth; }
+  Resolution getResolution()
+  { return _resolution; }
+  Quality getQuality()
+  { return _quality; }
+  std::string getUri()
+  { return _uri; }
 
-	void stream();
+  void stream();
 
-	~TwitchStreamPlaylist();
-private:
-    int _bandwidth;
-    Resolution _resolution;
-	Quality _quality;
-    std::string _uri;
-    std::vector<TwitchStreamChunk> _prevChunks;
+  ~TwitchStreamPlaylist();
+ private:
+  int _bandwidth;
+  Resolution _resolution;
+  Quality _quality;
+  std::string _uri;
+  std::vector<TwitchStreamChunk> _prevChunks;
 
-    TwitchStreamPlaylist();
+  TwitchStreamPlaylist();
 
-    std::vector<TwitchStreamChunk> getCurrentChunks();
-    void downloadChunks(std::vector<TwitchStreamChunk>& chunks);
+  std::vector<TwitchStreamChunk> getCurrentChunks();
+  void downloadChunks(std::vector<TwitchStreamChunk> &chunks);
 
-    friend class TwitchStreamPlaylistFactory;
+  friend class TwitchStreamPlaylistFactory;
 };
