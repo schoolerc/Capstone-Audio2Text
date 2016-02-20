@@ -20,6 +20,7 @@ ps_decoder_t *getDecoder()
                          "-hmm", SPHINX_MODELDIR "/en-us/en-us",
                          "-lm", SPHINX_MODELDIR "/en-us/en-us.lm.bin",
                          "-dict", SPHINX_MODELDIR "/en-us/cmudict-en-us.dict",
+                         "-logfn", "/dev/null",
                          nullptr);
     ps = ps_init(config);
   }

@@ -34,28 +34,28 @@ std::vector<TwitchStreamChunk> TwitchStreamPlaylist::getCurrentChunks()
 
 void TwitchStreamPlaylist::stream()
 {
-  auto currentChunks = getCurrentChunks();
 
-  std::vector<TwitchStreamChunk> chunksToDownload(currentChunks.begin(), currentChunks.end());
-  std::remove_if(chunksToDownload.begin(), chunksToDownload.end(), [this](TwitchStreamChunk &chunk)
+  while(true)
   {
-    auto itr = std::find_if(_prevChunks.begin(), _prevChunks.end(), [&chunk](TwitchStreamChunk &c)
+    auto currentChunks = getCurrentChunks();
+    std::vector<TwitchStreamChunk> chunksToDownload(currentChunks.begin(), currentChunks.end());
+
+    std::remove_if(chunksToDownload.begin(), chunksToDownload.end(), [this](TwitchStreamChunk &chunk)
     {
-      return chunk.getUri().compare(c.getUri()) == 0;
+      auto itr = std::find_if(_prevChunks.begin(), _prevChunks.end(), [&chunk](TwitchStreamChunk &c)
+      {
+        return chunk.getUri().compare(c.getUri()) == 0;
+      });
+
+      return itr != _prevChunks.end();
     });
 
-    return itr != _prevChunks.end();
-  });
+    ps_start_stream(getDecoder());
+    downloadChunks(chunksToDownload);
 
-  ps_start_stream(getDecoder());
-  downloadChunks(chunksToDownload);
 
-  int confidence;
-  std::cout << "GUESS: " <<ps_get_hyp(getDecoder(), &confidence) << std::endl;
-  std::cout << "CONFIDENCE: " << confidence <<std::endl;
-  std::cout.flush();
-
-  _prevChunks = currentChunks;
+    _prevChunks = currentChunks;
+  }
 }
 
 void TwitchStreamPlaylist::downloadChunks(std::vector<TwitchStreamChunk> &chunks)

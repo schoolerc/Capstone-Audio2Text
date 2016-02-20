@@ -2,6 +2,7 @@
 #include "Utilities.hpp"
 #include <fstream>
 #include <thread>
+#include <boost/filesystem.hpp>
 #include "FFMPEG.hpp"
 
 
@@ -62,14 +63,21 @@ AudioChunk AudioChunkFactory::build()
   file.close();
 
   std::stringstream cmd;
-  cmd << "ffmpeg -i " << fileName << " -vn -ar 16000 -ac 1 " << fileName << ".wav";
+  std::string audioFile = boost::filesystem::unique_path().native();
+  audioFile.append(".wav");
+  cmd << "ffmpeg -i " << fileName << " -vn -ar 16000 -ac 1 " << audioFile << " > /dev/null 2>&1";
 
   system(cmd.str().c_str());
 
-  std::string audioFile = fileName + ".wav";
   FILE* f = fopen(audioFile.c_str(), "rb");
   ps_decode_raw(getDecoder(), f, -1);
+  int confidence;
+  std::cout << ps_get_hyp(getDecoder(), &confidence) << std::endl;
   fclose(f);
+
+
+  std::remove(fileName.c_str());
+  std::remove(audioFile.c_str());
   /*
   AVFormatContext *formatContext = avformat_alloc_context();
 
