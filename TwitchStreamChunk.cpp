@@ -7,19 +7,18 @@
 #include <thread>
 
 
-void TwitchStreamChunk::download()
-{
+void TwitchStreamChunk::download() {
   _HttpClientType::request request(getUri());
   auto response = getHttpClient().get(request);
 
-  if (response.status() != 200)
-  {
-    throw std::runtime_error("Failed to download video file");
+  if (response.status() != 200) {
+	throw std::runtime_error("Failed to download video file");
   }
 
   AudioChunkFactory factory;
   factory.setRawData(response.body());
   factory.setUri(getUri());
 
-  _audioChunk = factory.build();
+  AudioChunk c = factory.build();
+  std::this_thread::sleep_for(std::chrono::minutes(1));
 }
