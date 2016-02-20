@@ -12,6 +12,7 @@ _HttpClientType &getHttpClient() {
   static std::shared_ptr<ps_decoder_t> ps(nullptr, ps_free);
   static std::shared_ptr<cmd_ln_t> config(nullptr, cmd_ln_free_r);
 
+<<<<<<< HEAD
   if(ps == nullptr || config == nullptr) {
 	config = std::make_shared<cmd_ln_t>(cmd_ln_init(nullptr, ps_args(), true,
 													"-hmm", SPHINX_MODELDIR "/en-us/en-us",
@@ -19,6 +20,17 @@ _HttpClientType &getHttpClient() {
 													"-dict", SPHINX_MODELDIR "/en-us/cmudict-en-us.dict",
 													nullptr));
 	ps = std::make_shared<ps_decoder_t>(ps_init(config.get()));
+=======
+  if (ps == nullptr || config == nullptr)
+  {
+    config = cmd_ln_init(nullptr, ps_args(), true,
+                         "-hmm", SPHINX_MODELDIR "/en-us/en-us",
+                         "-lm", SPHINX_MODELDIR "/en-us/en-us.lm.bin",
+                         "-dict", SPHINX_MODELDIR "/en-us/cmudict-en-us.dict",
+                         "-logfn", "/dev/null",
+                         nullptr);
+    ps = ps_init(config);
+>>>>>>> alpha
   }
 
   return ps;

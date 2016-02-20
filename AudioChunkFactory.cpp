@@ -1,5 +1,12 @@
 #include "AudioChunkFactory.h"
+<<<<<<< HEAD
 #include <sstream>
+=======
+#include "Utilities.hpp"
+#include <fstream>
+#include <thread>
+#include <boost/filesystem.hpp>
+>>>>>>> alpha
 #include "FFMPEG.hpp"
 #include <iostream>
 #include <exception>
@@ -49,6 +56,7 @@ void printAudioFrameInfo(const AVCodecContext* codecContext, const AVFrame* fram
         << " the red, green, and blue channels separately in different arrays.\n";
 }
 
+<<<<<<< HEAD
 int internalAVFormatRead(void *ptr, uint8_t *buf, int buf_size) {
     AudioChunkFactory *chunk = reinterpret_cast<AudioChunkFactory *>(ptr);
     chunk->_rawVideoData.read((char *) buf, buf_size);
@@ -60,6 +68,50 @@ int internalAVFormatRead(void *ptr, uint8_t *buf, int buf_size) {
 
     if (chunk->_rawVideoData.bad()) {
         return -1;
+=======
+AudioChunk AudioChunkFactory::build()
+{
+  int pos = _uri.find_last_of('/');
+  std::string fileName = _uri.substr(pos + 1);
+  std::ofstream file(fileName);
+  file << _rawVideoData.rdbuf();
+  file.flush();
+  file.close();
+
+  std::stringstream cmd;
+  std::string audioFile = boost::filesystem::unique_path().native();
+  audioFile.append(".wav");
+  cmd << "ffmpeg -i " << fileName << " -vn -ar 16000 -ac 1 " << audioFile << " > /dev/null 2>&1";
+
+  system(cmd.str().c_str());
+
+  FILE* f = fopen(audioFile.c_str(), "rb");
+  ps_decode_raw(getDecoder(), f, -1);
+  int confidence;
+  std::cout << ps_get_hyp(getDecoder(), &confidence) << std::endl;
+  fclose(f);
+
+
+  std::remove(fileName.c_str());
+  std::remove(audioFile.c_str());
+  /*
+  AVFormatContext *formatContext = avformat_alloc_context();
+
+  if (avformat_open_input(&formatContext, fileName.c_str(), 0, 0) != 0)
+  {
+    throw std::runtime_error("Failed to open input stream for video data");
+  }
+
+  avformat_find_stream_info(formatContext, nullptr);
+  //TODO: test if we actually have the video file open
+
+  int audioStream = -1;
+  for (int i = 0; i < formatContext->nb_streams; i++)
+  {
+    if (formatContext->streams[i]->codec->codec_type == AVMEDIA_TYPE_AUDIO && audioStream < 0)
+    {
+      audioStream = i;
+>>>>>>> alpha
     }
 
     return bytesRead;
