@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sstream>
+#include <memory>
 #include "AudioChunk.h"
 
 class AudioChunkFactory {
@@ -12,7 +13,7 @@ public:
     void setRawData(std::string buffer){ _rawVideoData.str(buffer);}
     void setUri(std::string uri){_uri = uri;}
 
-    AudioChunk build();
+    std::shared_ptr<AudioChunk> build();
 private:
     std::stringstream _rawVideoData;
     std::string _uri;

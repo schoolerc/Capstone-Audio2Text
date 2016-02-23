@@ -1,75 +1,15 @@
 #include "AudioChunkFactory.h"
-<<<<<<< HEAD
 #include <sstream>
-=======
 #include "Utilities.hpp"
 #include <fstream>
 #include <thread>
 #include <boost/filesystem.hpp>
->>>>>>> alpha
 #include "FFMPEG.hpp"
 #include <iostream>
 #include <exception>
 #include <stdexcept>
 
-void printAudioFrameInfo(const AVCodecContext* codecContext, const AVFrame* frame)
-{
-    // See the following to know what data type (unsigned char, short, float, etc) to use to access the audio data:
-    // http://ffmpeg.org/doxygen/trunk/samplefmt_8h.html#af9a51ca15301871723577c730b5865c5
-    std::cout << "Audio frame info:\n"
-        << "  Sample count: " << frame->nb_samples << '\n'
-        << "  Channel count: " << codecContext->channels << '\n'
-        << "  Format: " << av_get_sample_fmt_name(codecContext->sample_fmt) << '\n'
-        << "  Bytes per sample: " << av_get_bytes_per_sample(codecContext->sample_fmt) << '\n'
-        << "  Is planar? " << av_sample_fmt_is_planar(codecContext->sample_fmt) << '\n';
-
-
-    std::cout << "frame->linesize[0] tells you the size (in bytes) of each plane\n";
-
-    if (codecContext->channels > AV_NUM_DATA_POINTERS && av_sample_fmt_is_planar(codecContext->sample_fmt))
-    {
-        std::cout << "The audio stream (and its frames) have too many channels to fit in\n"
-            << "frame->data. Therefore, to access the audio data, you need to use\n"
-            << "frame->extended_data to access the audio data. It's planar, so\n"
-            << "each channel is in a different element. That is:\n"
-            << "  frame->extended_data[0] has the data for channel 1\n"
-            << "  frame->extended_data[1] has the data for channel 2\n"
-            << "  etc.\n";
-    }
-    else
-    {
-        std::cout << "Either the audio data is not planar, or there is enough room in\n"
-            << "frame->data to store all the channels, so you can either use\n"
-            << "frame->data or frame->extended_data to access the audio data (they\n"
-            << "should just point to the same data).\n";
-    }
-
-    std::cout << "If the frame is planar, each channel is in a different element.\n"
-        << "That is:\n"
-        << "  frame->data[0]/frame->extended_data[0] has the data for channel 1\n"
-        << "  frame->data[1]/frame->extended_data[1] has the data for channel 2\n"
-        << "  etc.\n";
-
-    std::cout << "If the frame is packed (not planar), then all the data is in\n"
-        << "frame->data[0]/frame->extended_data[0] (kind of like how some\n"
-        << "image formats have RGB pixels packed together, rather than storing\n"
-        << " the red, green, and blue channels separately in different arrays.\n";
-}
-
-<<<<<<< HEAD
-int internalAVFormatRead(void *ptr, uint8_t *buf, int buf_size) {
-    AudioChunkFactory *chunk = reinterpret_cast<AudioChunkFactory *>(ptr);
-    chunk->_rawVideoData.read((char *) buf, buf_size);
-    int bytesRead = chunk->_rawVideoData.gcount();
-
-    if (chunk->_rawVideoData.eof()) {
-        return AVERROR_EOF;
-    }
-
-    if (chunk->_rawVideoData.bad()) {
-        return -1;
-=======
-AudioChunk AudioChunkFactory::build()
+std::shared_ptr<AudioChunk> AudioChunkFactory::build()
 {
   int pos = _uri.find_last_of('/');
   std::string fileName = _uri.substr(pos + 1);
@@ -81,19 +21,25 @@ AudioChunk AudioChunkFactory::build()
   std::stringstream cmd;
   std::string audioFile = boost::filesystem::unique_path().native();
   audioFile.append(".wav");
-  cmd << "ffmpeg -i " << fileName << " -vn -ar 16000 -ac 1 " << audioFile << " > /dev/null 2>&1";
+  cmd << "ffmpeg -i " << fileName << " -vn -ac 1 " << audioFile << " > /dev/null 2>&1";
 
   system(cmd.str().c_str());
 
-  FILE* f = fopen(audioFile.c_str(), "rb");
-  ps_decode_raw(getDecoder(), f, -1);
-  int confidence;
-  std::cout << ps_get_hyp(getDecoder(), &confidence) << std::endl;
-  fclose(f);
+  auto chunk = std::make_shared<AudioChunk>();
 
+  FILE* aFile = fopen(audioFile.c_str(), "r");
+  ps_decode_raw(getDecoder(), aFile, -1);
+
+  auto logarithm = ps_get_logmath(getDecoder());
+
+  int confidence;
+  std::cout << "GUESS: " << ps_get_hyp(getDecoder(), &confidence) << std::endl;
+  std::cout << "CONFIDENCE: " << logmath_exp(logarithm, confidence) << std::endl;
 
   std::remove(fileName.c_str());
   std::remove(audioFile.c_str());
+  return chunk;
+  }
   /*
   AVFormatContext *formatContext = avformat_alloc_context();
 
@@ -111,7 +57,6 @@ AudioChunk AudioChunkFactory::build()
     if (formatContext->streams[i]->codec->codec_type == AVMEDIA_TYPE_AUDIO && audioStream < 0)
     {
       audioStream = i;
->>>>>>> alpha
     }
 
     return bytesRead;
@@ -245,3 +190,4 @@ AudioChunk AudioChunkFactory::build()
     delete[] internalBuffer;
     return AudioChunk();
 }
+*/

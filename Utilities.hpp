@@ -11,7 +11,7 @@ typedef boost::network::http::basic_client<boost::network::http::tags::http_asyn
 
 _HttpClientType& getHttpClient();
 
-std::shared_ptr<ps_decoder_t> getDecoder();
+ps_decoder_t* getDecoder();
 
 std::string url_encode(const std::string &value);
 

@@ -34,25 +34,7 @@ std::vector<TwitchStreamChunk> TwitchStreamPlaylist::getCurrentChunks()
 
 void TwitchStreamPlaylist::stream()
 {
-<<<<<<< HEAD
-    auto currentChunks = getCurrentChunks();
-
-    std::vector<TwitchStreamChunk> chunksToDownload(currentChunks.begin(), currentChunks.end());
-    std::remove_if(chunksToDownload.begin(), chunksToDownload.end(), [this](TwitchStreamChunk& chunk)
-    {
-        auto itr = std::find_if(_prevChunks.begin(), _prevChunks.end(), [&chunk](TwitchStreamChunk& c)
-        {
-            return chunk.getUri().compare(c.getUri()) == 0;
-        });
-
-        return itr != _prevChunks.end();
-    });
-
-    downloadChunks(chunksToDownload);
-
-    _prevChunks = currentChunks;
-=======
-
+  ps_start_stream(getDecoder());
   while(true)
   {
     auto currentChunks = getCurrentChunks();
@@ -68,13 +50,11 @@ void TwitchStreamPlaylist::stream()
       return itr != _prevChunks.end();
     });
 
-    ps_start_stream(getDecoder());
     downloadChunks(chunksToDownload);
 
 
     _prevChunks = currentChunks;
   }
->>>>>>> alpha
 }
 
 void TwitchStreamPlaylist::downloadChunks(std::vector<TwitchStreamChunk> &chunks)

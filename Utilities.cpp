@@ -8,19 +8,9 @@ _HttpClientType &getHttpClient() {
   return client;
 }
 
-/*std::shared_ptr<ps_decoder_t> getDecoder() {
-  static std::shared_ptr<ps_decoder_t> ps(nullptr, ps_free);
-  static std::shared_ptr<cmd_ln_t> config(nullptr, cmd_ln_free_r);
-
-<<<<<<< HEAD
-  if(ps == nullptr || config == nullptr) {
-	config = std::make_shared<cmd_ln_t>(cmd_ln_init(nullptr, ps_args(), true,
-													"-hmm", SPHINX_MODELDIR "/en-us/en-us",
-													"-lm", SPHINX_MODELDIR "/en-us/en-us.lm.bin",
-													"-dict", SPHINX_MODELDIR "/en-us/cmudict-en-us.dict",
-													nullptr));
-	ps = std::make_shared<ps_decoder_t>(ps_init(config.get()));
-=======
+ps_decoder_t* getDecoder() {
+  static ps_decoder_t* ps = nullptr;
+  static cmd_ln_t* config = nullptr;
   if (ps == nullptr || config == nullptr)
   {
     config = cmd_ln_init(nullptr, ps_args(), true,
@@ -28,14 +18,14 @@ _HttpClientType &getHttpClient() {
                          "-lm", SPHINX_MODELDIR "/en-us/en-us.lm.bin",
                          "-dict", SPHINX_MODELDIR "/en-us/cmudict-en-us.dict",
                          "-logfn", "/dev/null",
+						 "-samprate", "48000",
+						 "-nfft", "2048",
                          nullptr);
     ps = ps_init(config);
->>>>>>> alpha
   }
 
   return ps;
 }
-*/
 std::string escape_json(const std::string &s) {
   std::ostringstream o;
   for (auto c = s.cbegin(); c != s.cend(); c++) {

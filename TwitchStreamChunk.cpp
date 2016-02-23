@@ -19,6 +19,5 @@ void TwitchStreamChunk::download() {
   factory.setRawData(response.body());
   factory.setUri(getUri());
 
-  AudioChunk c = factory.build();
-  std::this_thread::sleep_for(std::chrono::minutes(1));
+  _chunk = factory.build();
 }
