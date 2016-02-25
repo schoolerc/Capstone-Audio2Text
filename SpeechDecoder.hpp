@@ -1,0 +1,15 @@
+//
+// Created by chaz on 2/24/16.
+//
+
+#ifndef STREAMAUDIOTEXT_SPEECHDECODER_HPP
+#define STREAMAUDIOTEXT_SPEECHDECODER_HPP
+
+
+class SpeechDecoder
+{
+
+};
+
+
+#endif //STREAMAUDIOTEXT_SPEECHDECODER_HPP
