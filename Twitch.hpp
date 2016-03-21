@@ -1,9 +1,4 @@
 #pragma once
-#include <string>
-#include <memory>
-#include <map>
-#include <boost/network/protocol.hpp>
-#include <utility>
 #include "TwitchStream.hpp"
 class TwitchStreamFactory;
 class Twitch

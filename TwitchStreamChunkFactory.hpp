@@ -1,7 +1,5 @@
 #pragma once
-#include <string>
 #include "TwitchStreamChunk.hpp"
-#include <vector>
 
 class TwitchStreamPlaylist;
 class TwitchStreamChunkFactory

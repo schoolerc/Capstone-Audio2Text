@@ -1,4 +1,4 @@
-#include <sstream>
+#include "prefix.hpp"
 #include "TwitchStreamPlaylistFactory.hpp"
 
 void TwitchStreamPlaylistFactory::clear()
@@ -54,7 +54,7 @@ TwitchStreamPlaylist TwitchStreamPlaylistFactory::build()
         //throw exception; string is not an http uri
     }
 
-    TwitchStreamPlaylist playlist;
+    TwitchStreamPlaylist playlist(_stream);
 
     std::string media_values = _media_info.substr(_media_info.find(':')+1);
     std::stringstream media_values_stream(media_values);

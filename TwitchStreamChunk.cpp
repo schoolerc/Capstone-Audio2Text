@@ -1,10 +1,8 @@
+#include "prefix.hpp"
 #include "TwitchStreamChunk.hpp"
-#include "FFMPEG.hpp"
 #include "Utilities.hpp"
 #include "AudioChunkFactory.h"
-#include <exception>
-#include <stdexcept>
-#include <thread>
+
 
 
 void TwitchStreamChunk::download() {
@@ -19,5 +17,15 @@ void TwitchStreamChunk::download() {
   factory.setRawData(response.body());
   factory.setUri(getUri());
 
-  _chunk = factory.build();
+  std::tie(_hypothesis, _confidence) = factory.build();
+
+  //std::unique_ptr<sql::PreparedStatement> statement(connection->prepareStatement("INSERT INTO ChannelTranscription.Test (test_hyp, test_confidence) VALUES (?, ?)"));
+
+  //statement->setString(1, hyp);
+  //statement->setDouble(2, confidence);
+
+  //auto result = statement->execute();
+
+  int i = 0;
+
 }

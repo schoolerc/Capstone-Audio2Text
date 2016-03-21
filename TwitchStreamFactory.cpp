@@ -1,4 +1,4 @@
-#include <sstream>
+#include "prefix.hpp"
 #include "TwitchStreamFactory.hpp"
 #include "TwitchStreamPlaylistFactory.hpp"
 
@@ -31,7 +31,7 @@ TwitchStream TwitchStreamFactory::build()
     std::getline(stream, m3uLine);
     std::getline(stream, m3uLine);
 
-    TwitchStreamPlaylistFactory playlistFactory;
+    TwitchStreamPlaylistFactory playlistFactory(result);
     while(stream.good())
     {
         playlistFactory.clear();

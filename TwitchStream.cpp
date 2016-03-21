@@ -1,5 +1,5 @@
+#include "prefix.hpp"
 #include "TwitchStream.hpp"
-#include <algorithm>
 
 TwitchStream::TwitchStream()
 {}
@@ -21,3 +21,4 @@ TwitchStreamPlaylist TwitchStream::getPlaylist(TwitchStreamPlaylist::Quality q)
 
     return *itr;
 }
+

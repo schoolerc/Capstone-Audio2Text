@@ -1,14 +1,13 @@
 #pragma once
-#include <string>
-#include <vector>
 #include "TwitchStreamPlaylist.hpp"
+class TwitchStreamPlaylist;
 class TwitchStream
 {
 public:
     ~TwitchStream();
 
 	TwitchStreamPlaylist getPlaylist(TwitchStreamPlaylist::Quality);
-    std::string streamName();
+    std::string streamName() {return _streamName;};
 
 private:
     TwitchStream();

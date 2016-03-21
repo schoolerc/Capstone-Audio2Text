@@ -1,4 +1,4 @@
-#include <vector>
+#pragma once
 #include "TwitchStream.hpp"
 #include "TwitchStreamPlaylist.hpp"
 

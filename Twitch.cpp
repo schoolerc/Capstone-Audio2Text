@@ -1,12 +1,5 @@
+#include "prefix.hpp"
 #include "Twitch.hpp"
-#include <boost/format.hpp>
-#include <random>
-#include <thread>
-#include <rapidjson/document.h>
-#include <iostream>
-#include <boost/iostreams/filtering_streambuf.hpp>
-#include <boost/iostreams/copy.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
 #include "Utilities.hpp"
 #include "TwitchStreamPlaylistFactory.hpp"
 #include "TwitchStreamFactory.hpp"
