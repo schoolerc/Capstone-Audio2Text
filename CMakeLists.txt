@@ -12,7 +12,7 @@ pkg_check_modules(FFMPEG REQUIRED libavformat)
 pkg_check_modules(SPHINX REQUIRED pocketsphinx)
 
 set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost COMPONENTS system log program_options iostreams date_time regex filesystem thread exception REQUIRED)
+find_package(Boost COMPONENTS system program_options exception REQUIRED)
 find_package(RAPIDJSON REQUIRED)
 find_package(cppnetlib REQUIRED)
 find_package(Threads REQUIRED)
