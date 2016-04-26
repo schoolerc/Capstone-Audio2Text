@@ -17,9 +17,6 @@
 #include <thread>
 #include <rapidjson/document.h>
 #include <iostream>
-#include <boost/iostreams/filtering_streambuf.hpp>
-#include <boost/iostreams/copy.hpp>
-#include <boost/iostreams/filter/gzip.hpp>
 #include <boost/program_options.hpp>
 #include <string>
 #include <memory>
@@ -38,6 +35,4 @@
 #include <mysql_driver.h>
 #include <mysql_connection.h>
 #include <memory>
-#include <boost/format.hpp>
-#include "FFMPEG.h"
 

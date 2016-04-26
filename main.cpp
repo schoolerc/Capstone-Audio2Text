@@ -26,7 +26,6 @@ po::variables_map parse_cmd_args(int argc, const char *argv[])
 int main(int argc, const char *argv[])
 {
   auto cmd_ln = parse_cmd_args(argc, argv);
-  av_register_all();
 
   try
   {
