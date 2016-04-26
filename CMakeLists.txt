@@ -20,7 +20,7 @@ find_package(ZLIB REQUIRED)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCES main.cpp TwitchStream.hpp TwitchStream.cpp TwitchStreamPlaylist.hpp TwitchStreamPlaylist.cpp Exception.hpp Utilities.hpp Utilities.cpp Twitch.hpp Twitch.cpp TwitchStreamPlaylistFactory.hpp TwitchStreamPlaylistFactory.cpp TwitchStreamFactory.cpp TwitchStreamFactory.hpp TwitchStreamChunk.cpp TwitchStreamChunk.hpp TwitchStreamChunkFactory.hpp TwitchStreamChunkFactory.cpp AudioChunk.cpp AudioChunk.h AudioChunkFactory.cpp AudioChunkFactory.h SpeechDecoder.cpp SpeechDecoder.hpp prefix.hpp FFMPEG.h)
+set(SOURCES main.cpp TwitchStream.hpp TwitchStream.cpp TwitchStreamPlaylist.hpp TwitchStreamPlaylist.cpp Exception.hpp Utilities.hpp Utilities.cpp Twitch.hpp Twitch.cpp TwitchStreamPlaylistFactory.hpp TwitchStreamPlaylistFactory.cpp TwitchStreamFactory.cpp TwitchStreamFactory.hpp TwitchStreamChunk.cpp TwitchStreamChunk.hpp TwitchStreamChunkFactory.hpp TwitchStreamChunkFactory.cpp prefix.hpp FFMPEG.h)
 
 add_executable(a2t ${SOURCES})
 

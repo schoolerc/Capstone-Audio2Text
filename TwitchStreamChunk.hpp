@@ -1,8 +1,8 @@
 #pragma once
+#include <utility>
 #include <string>
 #include <sstream>
 #include <memory>
-#include "AudioChunk.h"
 
 class TwitchStreamChunk
 {
@@ -12,6 +12,8 @@ class TwitchStreamChunk
   double _confidence;
   std::string _timestamp = "00:00:00";
   friend class TwitchStreamChunkFactory;
+
+    std::tuple<std::string, double> process(std::string body);
 
  public:
   TwitchStreamChunk()
@@ -29,5 +31,7 @@ class TwitchStreamChunk
   { return _confidence; }
   std::string getTimestamp()
   { return _timestamp; }
+
   void download();
+
 };
