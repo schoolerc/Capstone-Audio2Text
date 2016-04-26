@@ -6,6 +6,7 @@ include(cotire)
 
 project(StreamAudioText C CXX)
 
+find_package(PkgConfig)
 pkg_check_modules(SPHINX REQUIRED pocketsphinx)
 
 set(Boost_USE_STATIC_LIBS ON)
@@ -21,8 +22,8 @@ set(SOURCES main.cpp TwitchStream.hpp TwitchStream.cpp TwitchStreamPlaylist.hpp 
 
 add_executable(a2t ${SOURCES})
 
-include_directories(${Boost_INCLUDE_DIR} ${FFMPEG_INCLUDE_DIRS} ${CPPNETLIB_INCLUDE_DIRS} ${RAPIDJSON_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${SPHINX_INCLUDE_DIRS})
-target_link_libraries(a2t ${FFMPEG_LIBRARIES} ${Boost_LIBRARIES} ${CPPNETLIB_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} ${ZLIB_LIBRARIES} ${SPHINX_LIBRARIES} bz2 mysqlcppconn)
+include_directories(${Boost_INCLUDE_DIR} ${CPPNETLIB_INCLUDE_DIRS} ${RAPIDJSON_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${SPHINX_INCLUDE_DIRS})
+target_link_libraries(a2t ${Boost_LIBRARIES} ${CPPNETLIB_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} ${ZLIB_LIBRARIES} ${SPHINX_LIBRARIES} bz2 mysqlcppconn)
 
 
 set_property(DIRECTORY PROPERTY COTIRE_PREFIX_HEADER_IGNORE_PATH "${FFMPEG_INCLUDE_DIRS}/libavcodec;${FFMPEG_INCLUDE_DIRS}/libavformat;${FFMPEG_INCLUDE_DIRS}/libavutil;${FFMPEG_INCLUDE_DIRS}/libavresample" "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}")
