@@ -6,9 +6,6 @@ include(cotire)
 
 project(StreamAudioText C CXX)
 
-
-find_package(PkgConfig)
-pkg_check_modules(FFMPEG REQUIRED libavformat)
 pkg_check_modules(SPHINX REQUIRED pocketsphinx)
 
 set(Boost_USE_STATIC_LIBS ON)
